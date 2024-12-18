@@ -5,8 +5,8 @@
 # Translators:
 # Martin Trigaux, 2024
 # Tana Chan, 2024
-# Rasareeyar Lappiam, 2024
 # Wil Odoo, 2024
+# Rasareeyar Lappiam, 2024
 # 
 msgid ""
 msgstr ""
@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-25 08:16+0000\n"
 "PO-Revision-Date: 2024-09-25 09:41+0000\n"
-"Last-Translator: Wil Odoo, 2024\n"
+"Last-Translator: Rasareeyar Lappiam, 2024\n"
 "Language-Team: Thai (https://app.transifex.com/odoo/teams/41243/th/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -619,6 +619,37 @@ msgid ""
 "</div>\n"
 "            "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        เรียน\n"
+"        <t t-if=\"object.partner_id.parent_id\">\n"
+"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t> (<t t-out=\"object.partner_id.parent_id.name or ''\">Azure Interior</t>),\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        </t>\n"
+"        <br/><br/>\n"
+"        นี่คือใบลดหนี้ของคุณ\n"
+"        <t t-if=\"object.name\">\n"
+"             <span style=\"font-weight:bold;\" t-out=\"object.name or ''\">RINV/2021/05/0001</span>\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            ใบลดหนี้\n"
+"        </t>\n"
+"        <t t-if=\"object.invoice_origin\">\n"
+"            (เลขอ้างอิง: <t t-out=\"object.invoice_origin or ''\">SUB003</t>)\n"
+"        </t>\n"
+"        เป็นจำนวน <span style=\"font-weight:bold;\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 143,750.00</span>\n"
+"        จาก <t t-out=\"object.company_id.name or ''\">YourCompany</t>.\n"
+"        <br/><br/>\n"
+"        โปรดติดต่อเราหากคุณมีคำถาม\n"
+"        <t t-if=\"not is_html_empty(object.invoice_user_id.signature)\" data-o-mail-quote-container=\"1\">\n"
+"            <br/><br/>\n"
+"            <t t-out=\"object.invoice_user_id.signature or ''\" data-o-mail-quote=\"1\">--<br data-o-mail-quote=\"1\"/>Mitchell Admin</t>\n"
+"        </t>\n"
+"    </p>\n"
+"</div>\n"
+"            "
 
 #. module: account
 #: model:mail.template,body_html:account.email_template_edi_invoice
@@ -673,6 +704,55 @@ msgid ""
 "</div>\n"
 "            "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        เรียน\n"
+"        <t t-if=\"object.partner_id.parent_id\">\n"
+"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t> (<t t-out=\"object.partner_id.parent_id.name or ''\">Azure Interior</t>),\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        </t>\n"
+"        <br/><br/>\n"
+"        นี่คือใบแจ้งหนี้ของคุณ\n"
+"        <t t-if=\"object.name\">\n"
+"            <span style=\"font-weight:bold;\" t-out=\"object.name or ''\">INV/2021/05/0005</span>\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            ใบแจ้งหนี้\n"
+"        </t>\n"
+"        <t t-if=\"object.invoice_origin\">\n"
+"            (เลขอ้างอิง: <t t-out=\"object.invoice_origin or ''\">SUB003</t>)\n"
+"        </t>\n"
+"        เป็นจำนวน <span style=\"font-weight:bold;\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 143,750.00</span>\n"
+"        จาก <t t-out=\"object.company_id.name or ''\">YourCompany</t>.\n"
+"        <t t-if=\"object.payment_state in ('paid', 'in_payment')\">\n"
+"            ใบแจ้งหนี้นี้ได้รับการชำระเงินแล้ว\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            โปรดเงินชำระโดยเร็วที่สุด\n"
+"            <t t-if=\"object.payment_reference\">\n"
+"                <br/><br/>\n"
+"                โปรดใช้การสื่อสารต่อไปนี้สำหรับการชำระเงินของคุณ:<strong t-out=\"object.payment_reference or ''\">INV/2021/05/0005</strong>\n"
+"                <t t-if=\"object.partner_bank_id\">\n"
+"                    ในบัญชี <strong t-out=\"object.partner_bank_id.acc_number\"/>\n"
+"                </t>\n"
+"                \n"
+"            </t>\n"
+"        </t>\n"
+"        <t t-if=\"hasattr(object, 'timesheet_count') and object.timesheet_count\">\n"
+"            <br/><br/>\n"
+"            PS: คุณสามารถตรวจสอบใบบันทึกเวลาของคุณได้ <a t-att-href=\"'/my/timesheets?search_in=invoice&amp;search=%s' % object.name\">จากพอร์ทัล</a>\n"
+"        </t>\n"
+"        <br/><br/>\n"
+"        โปรดติดต่อเราหากคุณมีคำถาม\n"
+"        <t t-if=\"not is_html_empty(object.invoice_user_id.signature)\" data-o-mail-quote-container=\"1\">\n"
+"            <br/><br/>\n"
+"            <t t-out=\"object.invoice_user_id.signature or ''\" data-o-mail-quote=\"1\">--<br data-o-mail-quote=\"1\"/>Mitchell Admin</t>\n"
+"        </t>\n"
+"    </p>\n"
+"</div>\n"
+"            "
 
 #. module: account
 #: model:mail.template,body_html:account.mail_template_data_payment_receipt
@@ -694,6 +774,22 @@ msgid ""
 "    </p>\n"
 "</div>\n"
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        เรียน <t t-out=\"object.partner_id.name or ''\">Azure Interior</t><br/><br/>\n"
+"        ขอขอบคุณสำหรับการชำระเงินของคุณ\n"
+"        นี่คือใบเสร็จรับเงินของคุณ <span style=\"font-weight:bold;\" t-out=\"(object.name or '').replace('/','-') or ''\">BNK1-2021-05-0002</span> เป็นจำนวน\n"
+"         <span style=\"font-weight:bold;\" t-out=\"format_amount(object.amount, object.currency_id) or ''\">$ 10.00</span> จาก <t t-out=\"object.company_id.name or ''\">YourCompany</t>.\n"
+"        <br/><br/>\n"
+"        โปรดติดต่อเราหากคุณมีคำถาม\n"
+"        <br/><br/>\n"
+"        ขอแสดงความนับถือ\n"
+"        <t t-if=\"not is_html_empty(user.signature)\" data-o-mail-quote-container=\"1\">\n"
+"            <br/><br/>\n"
+"            <t t-out=\"user.signature or ''\" data-o-mail-quote=\"1\">--<br data-o-mail-quote=\"1\"/>Mitchell Admin</t>\n"
+"        </t>\n"
+"    </p>\n"
+"</div>\n"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.portal_my_home_menu_invoice
@@ -2317,6 +2413,12 @@ msgstr ""
 "โค้ดในใบแจ้งหนี้ของคุณเพื่อให้ลูกค้าสามารถชำระเงินได้ทันทีด้วยแอปพลิเคชันธนาคารบนมือถือ"
 
 #. module: account
+#. odoo-javascript
+#: code:addons/account/static/src/js/tours/account.js:0
+msgid "Add a description to your item."
+msgstr ""
+
+#. module: account
 #: model_terms:ir.actions.act_window,help:account.action_account_journal_form
 msgid "Add a journal"
 msgstr "เพิ่มสมุดรายวัน"
@@ -2901,6 +3003,9 @@ msgid ""
 "in accordance with its journal sequence. This lock date is irreversible and "
 "does not allow any exception."
 msgstr ""
+"รายการจนถึงและรวมถึงวันที่นั้นจะถูกเลื่อนออกไปในภายหลัง "
+"ตามลำดับของสมุดรายวัน "
+"วันที่ล็อกนี้ไม่สามารถย้อนกลับได้และไม่อนุญาตให้มีข้อยกเว้นใดๆ"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_res_company__fiscalyear_lock_date
@@ -2908,6 +3013,7 @@ msgid ""
 "Any entry up to and including that date will be postponed to a later time, "
 "in accordance with its journal's sequence."
 msgstr ""
+"รายการจนถึงวันที่ดังกล่าวจะถูกเลื่อนออกไปในภายหลังตามลำดับของสมุดรายวัน"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_res_company__tax_lock_date
@@ -2916,6 +3022,8 @@ msgid ""
 "later time, in accordance with its journal's sequence. The tax lock date is "
 "automatically set when the tax closing entry is posted."
 msgstr ""
+"รายการที่มีภาษีจนถึงวันที่ดังกล่าวจะถูกเลื่อนออกไปเป็นวันถัดไปตามลำดับของสมุดรายวัน"
+" วันที่ล็อกภาษีจะถูกกำหนดโดยอัตโนมัติเมื่อมีการลงรายการปิดภาษี"
 
 #. module: account
 #. odoo-python
@@ -2939,6 +3047,7 @@ msgid ""
 "Any purchase entry prior to and including this date will be postponed to a "
 "later date, in accordance with its journal's sequence."
 msgstr ""
+"รายการซื้อก่อนและรวมถึงวันที่นี้จะถูกเลื่อนไปเป็นวันถัดไปตามลำดับในสมุดรายวัน"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_res_company__sale_lock_date
@@ -2946,6 +3055,7 @@ msgid ""
 "Any sales entry prior to and including this date will be postponed to a "
 "later date, in accordance with its journal's sequence."
 msgstr ""
+"รายการขายก่อนและรวมถึงวันที่นี้จะถูกเลื่อนไปเป็นวันถัดไปตามลำดับในสมุดรายวัน"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_account_tag__applicability
@@ -4321,6 +4431,12 @@ msgstr "คลิก"
 
 #. module: account
 #. odoo-javascript
+#: code:addons/account/static/src/js/tours/account.js:0
+msgid "Click here to add a description to your product."
+msgstr ""
+
+#. module: account
+#. odoo-javascript
 #: code:addons/account/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
 msgid "Click or press enter to add a description"
 msgstr "คลิกหรือกด Enter เพื่อเพิ่มคำอธิบาย"
@@ -4546,8 +4662,8 @@ msgstr "บริษัทที่เกี่ยวข้องกับสม
 #. module: account
 #. odoo-javascript
 #: code:addons/account/static/src/js/tours/account.js:0
-msgid "Complete the partner data with email"
-msgstr "กรอกข้อมูลพาร์ทเนอร์ด้วยอีเมล"
+msgid "Complete the partner data with email."
+msgstr ""
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_report__use_sections
@@ -4584,12 +4700,6 @@ msgstr "การตรวจสอบการกำหนดค่า"
 #: model:onboarding.onboarding.step,button_text:account.onboarding_onboarding_step_fiscal_year
 msgid "Configure"
 msgstr "กำหนดค่า"
-
-#. module: account
-#. odoo-javascript
-#: code:addons/account/static/src/js/tours/account.js:0
-msgid "Configure document layout."
-msgstr "กำหนดค่าเค้าโครงเอกสาร"
 
 #. module: account
 #. odoo-python
@@ -4999,6 +5109,12 @@ msgstr "สร้างด้วยตนเอง"
 #: model_terms:ir.actions.act_window,help:account.rounding_list_action
 msgid "Create the first cash rounding"
 msgstr "เงินสด"
+
+#. module: account
+#. odoo-javascript
+#: code:addons/account/static/src/js/tours/account.js:0
+msgid "Create the product."
+msgstr ""
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_partner_bank_search_inherit
@@ -7105,8 +7221,8 @@ msgstr "ประเภทตัวเลข"
 #. module: account
 #. odoo-javascript
 #: code:addons/account/static/src/js/tours/account.js:0
-msgid "Fill in the details of the line."
-msgstr "กรอกรายละเอียดในบรรทัด"
+msgid "Fill in the details of the product or see the suggestion."
+msgstr ""
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_report__filter_fiscal_position
@@ -13739,8 +13855,8 @@ msgstr "กำหนดวันที่ โดยจะยืนยันก�
 #. module: account
 #. odoo-javascript
 #: code:addons/account/static/src/js/tours/account.js:0
-msgid "Set a price"
-msgstr "ตั้งราคา"
+msgid "Set a price."
+msgstr ""
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_account_tag__active
@@ -17336,6 +17452,12 @@ msgstr "ผู้จำหน่าย:"
 #: model_terms:ir.ui.view,arch_db:account.view_partner_bank_search_inherit
 msgid "Vendors"
 msgstr "ผู้จำหน่าย"
+
+#. module: account
+#. odoo-javascript
+#: code:addons/account/static/src/js/tours/account.js:0
+msgid "Verify the price and update if necessary."
+msgstr ""
 
 #. module: account
 #. odoo-javascript

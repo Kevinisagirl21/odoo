@@ -4012,15 +4012,16 @@ export class OdooEditor extends EventTarget {
             // just its rows.
             rangeContent = tableClone;
         }
-        const table = closestElement(range.startContainer, 'table');
-        if (rangeContent.firstChild.nodeName === 'TABLE' && table) {
+        const startTable = closestElement(range.startContainer, 'table');
+        if (rangeContent.firstChild.nodeName === 'TABLE' && startTable) {
             // Make sure the full leading table is copied.
-            rangeContent.firstChild.after(table.cloneNode(true));
+            rangeContent.firstChild.after(startTable.cloneNode(true));
             rangeContent.firstChild.remove();
         }
-        if (rangeContent.lastChild.nodeName === 'TABLE') {
+        const endTable = closestElement(range.endContainer, 'table');
+        if (rangeContent.lastChild.nodeName === 'TABLE' && endTable) {
             // Make sure the full trailing table is copied.
-            rangeContent.lastChild.before(closestElement(range.endContainer, 'table').cloneNode(true));
+            rangeContent.lastChild.before(endTable.cloneNode(true));
             rangeContent.lastChild.remove();
         }
 
@@ -4231,7 +4232,10 @@ export class OdooEditor extends EventTarget {
             this.execCommand('strikeThrough');
             this.historyResetLatestComputedSelection(true);
         } else if (IS_KEYBOARD_EVENT_LEFT_ARROW(ev) || IS_KEYBOARD_EVENT_RIGHT_ARROW(ev)) {
-            const side = ev.key === 'ArrowLeft' ? 'previous' : 'next';
+            const isRTL = this.options.direction === 'rtl';
+            const previousName = isRTL ? 'next' : 'previous';
+            const nextName = isRTL ? 'previous' : 'next';
+            const side = ev.key === 'ArrowLeft' ? previousName : nextName;
             const selection = this.document.getSelection();
             let { anchorNode, anchorOffset, focusNode, focusOffset } = selection || {};
             if (ev.shiftKey) {

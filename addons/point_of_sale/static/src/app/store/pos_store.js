@@ -1536,9 +1536,11 @@ export class PosStore extends Reactive {
 
         if (order) {
             await this.sendOrderInPreparation(order, cancelled);
-            order.updateLastOrderChange();
+            const getOrder = (uuid) => this.models["pos.order"].getBy("uuid", uuid);
+            getOrder(uuid).updateLastOrderChange();
             this.addPendingOrder([order.id]);
             await this.syncAllOrders();
+            getOrder(uuid).updateSavedQuantity();
         }
     }
 
@@ -1863,10 +1865,16 @@ export class PosStore extends Reactive {
 
         let existingLots = [];
         try {
-            existingLots = await this.data.call("pos.order.line", "get_existing_lots", [
-                this.company.id,
-                product.id,
-            ]);
+            existingLots = await this.data.call(
+                "pos.order.line",
+                "get_existing_lots",
+                [this.company.id, product.id],
+                {
+                    context: {
+                        config_id: this.config.id,
+                    },
+                }
+            );
             if (!canCreateLots && (!existingLots || existingLots.length === 0)) {
                 this.dialog.add(AlertDialog, {
                     title: _t("No existing serial/lot number"),
